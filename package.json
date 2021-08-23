@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/unamednada/sd-014-a-shopping-t-shirt/issues"
   },
-  "homepage": "https://github.com/unamednada/sd-014-a-shopping-t-shirt#readme"
+  "homepage": "https://github.com/unamednada/sd-014-a-shopping-t-shirt#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
 }
