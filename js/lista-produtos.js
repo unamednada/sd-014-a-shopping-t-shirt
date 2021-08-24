@@ -2,9 +2,10 @@
 
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 const productList = document.querySelector('#listagem');
+const selectParam = document.querySelector('#genero');
+const order = document.querySelector('#ordem');
 
-
-const fetchResultArray = async (param) => {
+const fetchResultArray = async (param = 'camisas') => {
   const endpoint = url + param;
   try {
     const response = await fetch(endpoint);
@@ -28,8 +29,10 @@ const createProductItem = ({ price, thumbnail, title }) => {
   productList.appendChild(item);
 }
 
-const displayResults = async () => {
-  const itemsArray = await fetchResultArray('camisas');
+const displayResults = async (param, ordem) => {
+  const itemsArray = await fetchResultArray(param);
+  if (ordem === 'menor-preco') itemsArray.sort((a, b) => a.price - b.price);
+  if (ordem === 'maior-preco') itemsArray.sort((a, b) => b.price - a.price);
   itemsArray.forEach((item) => {
     createProductItem(item);
   })
@@ -37,5 +40,19 @@ const displayResults = async () => {
 
 window.onload = () => {
   displayResults();
+
+  selectParam.addEventListener('change', (e) => {
+    let genero = e.target.value;
+    productList.innerHTML = '';
+    displayResults(genero);
+
+    order.addEventListener('change', (e) => {
+      let ordem = e.target.value;
+      productList.innerHTML = '';
+      displayResults(genero, ordem);
+    })
+  })
+
+
 }
 
