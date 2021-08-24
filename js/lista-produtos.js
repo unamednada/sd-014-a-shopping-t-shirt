@@ -19,10 +19,11 @@ const fetchResultArray = async (param) => {
 
 const createProductItem = ({ price, thumbnail, title }) => {
   const item = document.createElement('div');
+  const formatedPrice = Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(price);
   item.innerHTML = `
   <img src=${thumbnail} class="rounded img_produto img_fluid" />
-  <h2 class="desc_produto">${title}</h2>
-  <div class="preco_produto">R$ ${price}</div>`;
+  <h2 class="desc_produto">${title.slice(0, 42) + '...'}</h2>
+  <div class="preco_produto">${formatedPrice}</div>`;
   item.className = 'col-md-3 info-produto';
   productList.appendChild(item);
 }
