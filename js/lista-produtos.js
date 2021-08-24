@@ -6,6 +6,7 @@ const selectParam = document.querySelector('#genero');
 const order = document.querySelector('#ordem');
 const search = document.querySelector('#search');
 const searchBtn = document.querySelector('#btn-search');
+let productsArray = [];
 
 const fetchResultArray = async (param = 'camisas') => {
   const endpoint = url + param;
@@ -31,39 +32,37 @@ const createProductItem = ({ price, thumbnail, title }) => {
   productList.appendChild(item);
 }
 
-const displayResults = async (param, ordem, filter) => {
-  let itemsArray = await fetchResultArray(param);
-  if (ordem === 'menor-preco') itemsArray.sort((a, b) => a.price - b.price);
-  if (ordem === 'maior-preco') itemsArray.sort((a, b) => b.price - a.price);
-  if (filter) itemsArray = itemsArray.filter((item) => item.title.includes(filter));
-  itemsArray.forEach((item) => {
+const displayResults = async (array, ordem = 'relevant') => {
+  if (ordem === 'menor-preco') array.sort((a, b) => a.price - b.price);
+  if (ordem === 'maior-preco') array.sort((a, b) => b.price - a.price);
+  array.forEach((item) => {
     createProductItem(item);
   })
 }
 
-const filterResults = 
-
-window.onload = () => {
-  displayResults();
-  let genero;
-  let ordem;
+window.onload = async () => {
+  productsArray = await fetchResultArray();
+  displayResults(productsArray);
+  let genero, ordem, filter;
   
-  selectParam.addEventListener('change', (e) => {
+  selectParam.addEventListener('change', async (e) => {
     genero = e.target.value;
+    productsArray = await fetchResultArray(genero);
     productList.innerHTML = '';
-    displayResults(genero);
+    displayResults(productsArray);
   })
 
   order.addEventListener('change', (e) => {
     ordem = e.target.value;
     productList.innerHTML = '';
-    displayResults(genero, ordem);
+    displayResults(productsArray, ordem);
   })
 
   searchBtn.addEventListener('click', () => {
-    const filter = search.value;
+    filter = search.value.toString();
     productList.innerHTML = '';
-    displayResults(genero, ordem, filter);
+    productsArray = productsArray.filter((item) => item.title.toUpperCase().includes(filter.toUpperCase()));
+    displayResults(productsArray);
   });
 }
 
