@@ -1,13 +1,13 @@
 // const fetch = require('node-fetch');
 
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=camisas';
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 const productList = document.querySelector('#listagem');
 
 
-const fetchResultArray = async () => {
-
+const fetchResultArray = async (param) => {
+  const endpoint = url + param;
   try {
-    const response = await fetch(url);
+    const response = await fetch(endpoint);
     const jsonResponse = await response.json();
     return jsonResponse.results;
   } catch (error) {
@@ -15,17 +15,26 @@ const fetchResultArray = async () => {
   }
 }
 
-fetchResultArray().then((resultArray) => console.log(resultArray));
+// fetchResultArray('camisas-infantil').then((resultArray) => console.log(resultArray));
 
 const createProductItem = ({ price, thumbnail, title }) => {
   const item = document.createElement('div');
   item.innerHTML = `
-  <img src=${thumbnail} class='img_produto' />
-  <p>${title}</p>
-  <p>R$ ${price}`;
+  <img src=${thumbnail} class="rounded img_produto img_fluid" />
+  <h2 class="desc_produto">${title}</h2>
+  <div class="preco_produto">R$ ${price}</div>`;
+  item.className = 'col-md-3 info-produto';
   productList.appendChild(item);
 }
 
-fetchResultArray().then((resultArray) => {
-  resultArray.forEach((result) => createProductItem(result));
-})
+const displayResults = async () => {
+  const itemsArray = await fetchResultArray('camisas');
+  itemsArray.forEach((item) => {
+    createProductItem(item);
+  })
+}
+
+window.onload = () => {
+  displayResults();
+}
+
