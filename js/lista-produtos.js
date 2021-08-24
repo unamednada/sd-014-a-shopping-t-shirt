@@ -20,7 +20,7 @@ fetchResultArray().then((resultArray) => console.log(resultArray));
 const createProductItem = ({ price, thumbnail, title }) => {
   const item = document.createElement('div');
   item.innerHTML = `
-  <img src=${thumbnail} />
+  <img src=${thumbnail} class='img_produto' />
   <p>${title}</p>
   <p>R$ ${price}`;
   productList.appendChild(item);
