@@ -32,7 +32,7 @@ const createProductItem = ({ price, thumbnail, title }) => {
   productList.appendChild(item);
 }
 
-const displayResults = async (array, ordem = 'relevant') => {
+const displayResults = async (array, ordem = 'relevancia') => {
   if (ordem === 'menor-preco') array.sort((a, b) => a.price - b.price);
   if (ordem === 'maior-preco') array.sort((a, b) => b.price - a.price);
   array.forEach((item) => {
@@ -44,8 +44,10 @@ window.onload = async () => {
   productsArray = await fetchResultArray();
   displayResults(productsArray);
   let genero, ordem, filter;
-  
+  let filteredArray = [];
+
   selectParam.addEventListener('change', async (e) => {
+    filteredArray = [];
     genero = e.target.value;
     productsArray = await fetchResultArray(genero);
     productList.innerHTML = '';
@@ -55,13 +57,14 @@ window.onload = async () => {
   order.addEventListener('change', (e) => {
     ordem = e.target.value;
     productList.innerHTML = '';
-    displayResults(productsArray, ordem);
+    if (filteredArray.length !== 0) displayResults(filteredArray, ordem)
+    else displayResults(productsArray, ordem);
   })
 
   searchBtn.addEventListener('click', () => {
     filter = search.value.toString();
     productList.innerHTML = '';
-    const filteredArray = productsArray.filter((item) => item.title.toUpperCase().includes(filter.toUpperCase()));
+    filteredArray = productsArray.filter((item) => item.title.toUpperCase().includes(filter.toUpperCase()));
     displayResults(filteredArray);
   });
 }
