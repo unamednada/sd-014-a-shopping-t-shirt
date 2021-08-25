@@ -61,8 +61,8 @@ window.onload = async () => {
   searchBtn.addEventListener('click', () => {
     filter = search.value.toString();
     productList.innerHTML = '';
-    productsArray = productsArray.filter((item) => item.title.toUpperCase().includes(filter.toUpperCase()));
-    displayResults(productsArray);
+    const filteredArray = productsArray.filter((item) => item.title.toUpperCase().includes(filter.toUpperCase()));
+    displayResults(filteredArray);
   });
 }
 
