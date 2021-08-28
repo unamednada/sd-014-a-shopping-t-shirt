@@ -1,0 +1,23 @@
+{
+  "name": "sd-014-a-shopping-t-shirt",
+  "version": "1.0.0",
+  "description": "Projeto para revisão geral dos blocos 8, 9 e 10 - Semana de ficar on-track",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unamednada/sd-014-a-shopping-t-shirt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unamednada/sd-014-a-shopping-t-shirt/issues"
+  },
+  "homepage": "https://github.com/unamednada/sd-014-a-shopping-t-shirt#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
